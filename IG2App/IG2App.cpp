@@ -80,27 +80,41 @@ void IG2App::setupScene(void)
   luz->setType(Ogre::Light::LT_DIRECTIONAL);
   luz->setDiffuseColour(0.75, 0.75, 0.75);
 
-  mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
-  //mLightNode = mCamNode->createChildSceneNode("nLuz");
+  //mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
+  mLightNode = mCamNode->createChildSceneNode("nLuz");
   mLightNode->attachObject(luz);
 
   mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
   //lightNode->setPosition(0, 0, 1000);
+  //------------------------------------------------------------------------
+
+  //Creación plano
+  MeshManager::getSingleton().createPlane("mPlane1080x800", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+	  Plane(Vector3::UNIT_Y, 0), 1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
+  Ogre::Entity* entPlane = mSM->createEntity("mPlane1080x800");
+  mPlaneNode = mSM->getRootSceneNode()->createChildSceneNode("mPlane1080x800");
+  mPlaneNode->attachObject(entPlane);
+
+
  
   //------------------------------------------------------------------------
 
   // finally something to render
 
   Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
-
-  mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
+  
+  mSinbadNode = mPlaneNode->createChildSceneNode("nSinbad");
   mSinbadNode->attachObject(ent);
 
-  //mSinbadNode->setPosition(400, 100, -300);
+  mSinbadNode->setPosition(400, 100, -300);
   mSinbadNode->setScale(20, 20, 20);
   //mSinbadNode->yaw(Ogre::Degree(-45));
   //mSinbadNode->showBoundingBox(true);
   //mSinbadNode->setVisible(false);
+
+
+  
 
   //------------------------------------------------------------------------
 
@@ -110,8 +124,5 @@ void IG2App::setupScene(void)
   
   //mCamMgr->setTarget(mSinbadNode);  
   //mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
-
-  //------------------------------------------------------------------------
-
 }
 
