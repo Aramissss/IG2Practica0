@@ -5,6 +5,7 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 
+
 using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -95,7 +96,9 @@ void IG2App::setupScene(void)
   Ogre::Entity* entPlane = mSM->createEntity("mPlane1080x800");
   mPlaneNode = mSM->getRootSceneNode()->createChildSceneNode("mPlane1080x800");
   mPlaneNode->attachObject(entPlane);
-
+  //------------------------------------------------------------------------
+ // mToyNode = new Toy(mPlaneNode, mSM);
+  
 
  
   //------------------------------------------------------------------------
@@ -113,7 +116,8 @@ void IG2App::setupScene(void)
   //mSinbadNode->showBoundingBox(true);
   //mSinbadNode->setVisible(false);
 
-
+  mToy = new Toy(mPlaneNode);
+  mToy->setPosition({ 0, 100, -300 });
   
 
   //------------------------------------------------------------------------
