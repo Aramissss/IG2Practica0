@@ -21,9 +21,9 @@ Toy::Toy(Ogre::SceneNode* nodeMain)
 	nodeOmbligo->attachObject(entOmb);
 	nodeOmbligo->setScale(0.2, 0.2, 0.2);
 
-	//Cabeza como hijo del cuerpo
+	//Cabeza como hijo del cuello
 	Ogre::Entity* entCabeza = nodeMain->getCreator()->createEntity("sphere.mesh");
-	nodeCabeza = nodeCuerpo->createChildSceneNode("nCabeza", { 0.0,150.0,0.0 });
+	nodeCabeza = nodeCuello->createChildSceneNode("nCabeza", { 0.0,150.0,0.0 });
 	nodeCabeza->attachObject(entCabeza);
 	nodeCabeza->setScale(0.5, 0.5, 0.5);
 
@@ -51,6 +51,29 @@ Toy::Toy(Ogre::SceneNode* nodeMain)
 	nodeOjoD->attachObject(entOjoD);
 	nodeOjoD->setScale(0.2, 0.2, 0.2);
 
+}
+
+bool Toy::keyPressed(const OgreBites::KeyboardEvent & evt)
+{
+	if (evt.keysym.sym == SDLK_t) {
+		nodeCuello->translate({ 0.0,0.0,3.0 });
+		nodeCabeza->yaw(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
+		nodeCuerpo->pitch(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
+	}
+	else if (evt.keysym.sym == SDLK_y) {
+		switchParado();
+	}
+	return true;
+}
+void Toy::frameRendered(const Ogre::FrameEvent & evt)
+{
+	if (!parado && evt.timeSinceLastFrame <= 1) {
+		nodeCuello->translate({ 0.0,0.0,3.0 });
+		nodeCabeza->yaw(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
+		nodeCuerpo->pitch(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
+	}
+	//evt.timeSinceLastFrame
+	//evt.timeSinceLastEvent
 }
 
 

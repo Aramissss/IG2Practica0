@@ -8,7 +8,7 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
-class Toy
+class Toy : public OgreBites::InputListener
 {
 private:
 	Ogre::SceneNode* nodeMain = nullptr;
@@ -20,14 +20,21 @@ private:
 	Ogre::SceneNode* nodeBoca = nullptr;
 	Ogre::SceneNode* nodeOjoI = nullptr;
 	Ogre::SceneNode* nodeOjoD = nullptr;
+	bool parado = true;
 
 public:
+	void switchParado() {
+		if (parado) parado = false;
+		else parado = true;
+	}
 	void setScale(Ogre::Vector3 scale) {
 		nodeCuello->setScale(scale);
 	}
 	void setPosition(Ogre::Vector3 position) {
 		nodeCuello->setPosition(position);
 	}
+	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
+	virtual void frameRendered(const Ogre::FrameEvent & evt);
 	Toy(Ogre::SceneNode* nodeMain);
 	~Toy();
 };

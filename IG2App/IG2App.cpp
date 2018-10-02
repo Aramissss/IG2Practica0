@@ -94,8 +94,10 @@ void IG2App::setupScene(void)
 	  Plane(Vector3::UNIT_Y, 0), 1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
   Ogre::Entity* entPlane = mSM->createEntity("mPlane1080x800");
+  entPlane->setMaterialName("IG2App/plano");
   mPlaneNode = mSM->getRootSceneNode()->createChildSceneNode("mPlane1080x800");
   mPlaneNode->attachObject(entPlane);
+  
   //------------------------------------------------------------------------
  // mToyNode = new Toy(mPlaneNode, mSM);
   
@@ -118,6 +120,8 @@ void IG2App::setupScene(void)
 
   mToy = new Toy(mPlaneNode);
   mToy->setPosition({ 0, 100, -300 });
+
+  addInputListener(mToy);
   
 
   //------------------------------------------------------------------------
