@@ -14,6 +14,9 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
   {
     getRoot()->queueEndRendering();
   }
+  else if (evt.keysym.sym == SDLK_p) {
+	  mPlaneNode->pitch(Ogre::Radian(0.1));
+  }
   //else if (evt.keysym.sym == SDLK_???)
   
   return true;

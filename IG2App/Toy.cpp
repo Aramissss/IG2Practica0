@@ -56,19 +56,22 @@ Toy::Toy(Ogre::SceneNode* nodeMain)
 bool Toy::keyPressed(const OgreBites::KeyboardEvent & evt)
 {
 	if (evt.keysym.sym == SDLK_t) {
-		nodeCuello->translate({ 0.0,0.0,3.0 });
+		nodeCuello->translate({ 0.0,0.0,3.0 }, Ogre::Node::TS_LOCAL);
 		nodeCabeza->yaw(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
 		nodeCuerpo->pitch(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
 	}
 	else if (evt.keysym.sym == SDLK_y) {
 		switchParado();
 	}
+	else if (evt.keysym.sym == SDLK_v) {
+		nodeCuello->yaw(Ogre::Radian(3.1415/4));
+	}
 	return true;
 }
 void Toy::frameRendered(const Ogre::FrameEvent & evt)
 {
 	if (!parado && evt.timeSinceLastFrame <= 1) {
-		nodeCuello->translate({ 0.0,0.0,3.0 });
+		nodeCuello->translate({ 0.0,0.0,3.0 }, Ogre::Node::TS_LOCAL);
 		nodeCabeza->yaw(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
 		nodeCuerpo->pitch(Ogre::Radian(0.1), Ogre::Node::TS_LOCAL);
 	}
