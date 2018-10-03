@@ -14,9 +14,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
   {
     getRoot()->queueEndRendering();
   }
-  else if (evt.keysym.sym == SDLK_p) {
-	  mPlaneNode->pitch(Ogre::Radian(0.1));
-  }
+  
   //else if (evt.keysym.sym == SDLK_???)
   
   return true;
@@ -96,10 +94,9 @@ void IG2App::setupScene(void)
   MeshManager::getSingleton().createPlane("mPlane1080x800", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 	  Plane(Vector3::UNIT_Y, 0), 1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
-  Ogre::Entity* entPlane = mSM->createEntity("mPlane1080x800");
-  entPlane->setMaterialName("IG2App/plano");
-  mPlaneNode = mSM->getRootSceneNode()->createChildSceneNode("mPlane1080x800");
-  mPlaneNode->attachObject(entPlane);
+  mPlaneNode = new PlaneObject(mSM->getRootSceneNode());
+
+  addInputListener(mPlaneNode);
   
   //------------------------------------------------------------------------
  // mToyNode = new Toy(mPlaneNode, mSM);
@@ -109,19 +106,11 @@ void IG2App::setupScene(void)
   //------------------------------------------------------------------------
 
   // finally something to render
+  Sinbad* mSinbad = new Sinbad(mPlaneNode->getMainNode());
 
-  Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
-  
-  mSinbadNode = mPlaneNode->createChildSceneNode("nSinbad");
-  mSinbadNode->attachObject(ent);
+  addInputListener(mSinbad);
 
-  mSinbadNode->setPosition(400, 100, -300);
-  mSinbadNode->setScale(20, 20, 20);
-  //mSinbadNode->yaw(Ogre::Degree(-45));
-  //mSinbadNode->showBoundingBox(true);
-  //mSinbadNode->setVisible(false);
-
-  mToy = new Toy(mPlaneNode);
+  mToy = new Toy(mPlaneNode->getMainNode());
   mToy->setPosition({ 0, 100, -300 });
 
   addInputListener(mToy);

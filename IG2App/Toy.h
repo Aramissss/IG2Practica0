@@ -8,10 +8,10 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
-class Toy : public OgreBites::InputListener
+#include "gameObject.h"
+class Toy : public gameObject
 {
 private:
-	Ogre::SceneNode* nodeMain = nullptr;
 	Ogre::SceneNode* nodeCuello = nullptr;
 	Ogre::SceneNode* nodeCuerpo = nullptr;
 	Ogre::SceneNode* nodeCabeza = nullptr;
@@ -35,7 +35,7 @@ public:
 	}
 	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
 	virtual void frameRendered(const Ogre::FrameEvent & evt);
-	Toy(Ogre::SceneNode* nodeMain);
+	Toy(Ogre::SceneNode* _parentNode);
 	~Toy();
 };
 
