@@ -3,8 +3,16 @@
 #include <OgreEntity.h>
 #include <OgreInput.h>
 #include <SDL_keycode.h>
+#include <OgreMovablePlane.h>
 #include <OgreMeshManager.h>
-
+#include <OgreTextureManager.h>
+#include <OgreHardwarePixelBuffer.h>
+#include <OgreTexture.h>
+#include <OgreRenderTexture.h>
+#include <OgreTechnique.h>
+#include <OgreCompositionTargetPass.h>
+#include <OgrePass.h>
+#include <OgreSubEntity.h>
 
 using namespace Ogre;
 
@@ -92,25 +100,36 @@ void IG2App::setupScene(void)
 
   //Creación plano
   MeshManager::getSingleton().createPlane("mPlane1080x800", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-	  Plane(Vector3::UNIT_Y, 0), 1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+	  Plane(Vector3::UNIT_Y, 0), 1080, 800, 100, 80, true, 1, 1.0, 1.0, -Vector3::UNIT_Z);
 
-  mPlaneNode = new PlaneObject(mSM->getRootSceneNode());
+  mPlane = new PlaneObject(mSM->getRootSceneNode());
 
-  addInputListener(mPlaneNode);
+  addInputListener(mPlane);
   
   //------------------------------------------------------------------------
  // mToyNode = new Toy(mPlaneNode, mSM);
-  
+ 
+
+  //camRef->setNearClipDistance(1);
+  //camRef->setFarClipDistance(10000);
+  //camRef->setAutoAspectRatio(true);
+  //camRef->enableReflection(mPlaneNode);
+  //camRef->enableCustomNearClipPlane(mPlaneNode)
+	  //cam->setPolygonMode(Ogre::PM_WIREFRAME); 
+
+	/*  Ogre::SceneNode* mCamNode = nullptr;
+  mCamNode = _parentNode->getCreator()->getRootSceneNode()->createChildSceneNode("nCam");
+  mCamNode->attachObject(camRef);*/
 
  
   //------------------------------------------------------------------------
 
   // finally something to render
-  Sinbad* mSinbad = new Sinbad(mPlaneNode->getMainNode());
+  Sinbad* mSinbad = new Sinbad(mPlane->getMainNode());
 
   addInputListener(mSinbad);
 
-  mToy = new Toy(mPlaneNode->getMainNode());
+  mToy = new Toy(mPlane->getMainNode());
   mToy->setPosition({ 0, 100, -300 });
 
   addInputListener(mToy);

@@ -33,7 +33,7 @@ protected:
   OgreBites::CameraMan* mCamMgr = nullptr;
   Toy* mToy = nullptr;
   Sinbad* mSinbad = nullptr;
-  PlaneObject* mPlaneNode = nullptr;
+  PlaneObject* mPlane = nullptr;
  
 };
 
