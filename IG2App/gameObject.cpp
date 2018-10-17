@@ -2,7 +2,7 @@
 
 
 
-gameObject::gameObject(Ogre::SceneNode* _parentNode): parentNode(_parentNode)
+gameObject::gameObject(Ogre::SceneNode* _node): mNode(_node)
 {
 }
 

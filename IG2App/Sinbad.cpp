@@ -2,13 +2,13 @@
 
 
 
-Sinbad::Sinbad(Ogre::SceneNode* _parentNode): gameObject(_parentNode)
+Sinbad::Sinbad(Ogre::SceneNode* _node, Ogre::SceneManager* _msm): gameObject(_node)
 {
-	mainNode = _parentNode;
+	//mainNode = _parentNode;
 
-	Ogre::Entity* ent = _parentNode->getCreator()->createEntity("Sinbad.mesh");
+	Ogre::Entity* ent = _msm->createEntity("Sinbad.mesh");
 
-	mSinbadNode = _parentNode->createChildSceneNode("nSinbad");
+	mSinbadNode = _node;
 	mSinbadNode->attachObject(ent);
 
 	mSinbadNode->setPosition(400, 100, -300);

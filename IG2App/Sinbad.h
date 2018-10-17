@@ -6,7 +6,8 @@ class Sinbad :
 private:
 	Ogre::SceneNode* mSinbadNode = nullptr;
 public:
-	Sinbad(Ogre::SceneNode* _parentNode);
+	//Ogre::SceneNode* getMainNode() { return mSinbadNode; };
+	Sinbad(Ogre::SceneNode* _node, Ogre::SceneManager* _msm);
 	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
 	~Sinbad();
 };

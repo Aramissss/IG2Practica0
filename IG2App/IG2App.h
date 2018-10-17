@@ -9,7 +9,7 @@
 #include "Toy.h"
 #include "Sinbad.h"
 #include "PlaneObject.h"
-
+#include "Bomb.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -34,7 +34,7 @@ protected:
   Toy* mToy = nullptr;
   Sinbad* mSinbad = nullptr;
   PlaneObject* mPlane = nullptr;
- 
+  Bomb* mBomb = nullptr;
 };
 
 #endif

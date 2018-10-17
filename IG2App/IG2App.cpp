@@ -105,6 +105,21 @@ void IG2App::setupScene(void)
   mPlane = new PlaneObject(mSM->getRootSceneNode());
 
   addInputListener(mPlane);
+
+  Ogre::Camera* camRef = mSM->createCamera("RefCam");
+
+  camRef->setNearClipDistance(1);
+  camRef->setFarClipDistance(10000);
+  camRef->setAutoAspectRatio(true);
+
+  mCamNode->attachObject(camRef);
+
+  MovablePlane* mp = new MovablePlane({ 0,1,0 }, 1);
+  mPlane->getMainNode()->attachObject(mp);
+  camRef->enableReflection(mp);
+  camRef->enableCustomNearClipPlane(mp);//Sacar esto al main
+
+  mPlane->crearReflejo(camRef);
   
   //------------------------------------------------------------------------
  // mToyNode = new Toy(mPlaneNode, mSM);
@@ -125,21 +140,26 @@ void IG2App::setupScene(void)
   //------------------------------------------------------------------------
 
   // finally something to render
-  Sinbad* mSinbad = new Sinbad(mPlane->getMainNode());
+  mSinbad = new Sinbad(mPlane->getMainNode()->createChildSceneNode("nSinbad"), mSM);
 
   addInputListener(mSinbad);
 
-  mToy = new Toy(mPlane->getMainNode());
+  mToy = new Toy(mPlane->getMainNode()->createChildSceneNode("nToy"), mSM);
   mToy->setPosition({ 0, 100, -300 });
 
   addInputListener(mToy);
   
+  mBomb = new Bomb(mPlane->getMainNode()->createChildSceneNode("nBomb"), mSM);
+  mBomb->setPosition({ 100, 100, -300 });
+
+  addInputListener(mBomb);
 
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);
   addInputListener(mCamMgr);
   mCamMgr->setStyle(OgreBites::CS_ORBIT);  
+  
   
   //mCamMgr->setTarget(mSinbadNode);  
   //mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);

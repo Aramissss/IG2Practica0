@@ -35,7 +35,8 @@ public:
 	}
 	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
 	virtual void frameRendered(const Ogre::FrameEvent & evt);
-	Toy(Ogre::SceneNode* _parentNode);
+	Ogre::SceneNode* getMainNode() { return nodeCuello; };
+	Toy(Ogre::SceneNode* _node, Ogre::SceneManager* _msm);
 	~Toy();
 };
 

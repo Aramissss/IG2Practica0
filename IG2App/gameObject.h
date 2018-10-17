@@ -11,11 +11,10 @@
 class gameObject: public OgreBites::InputListener
 {
 protected:
-	Ogre::SceneNode* parentNode = nullptr;
-	Ogre::SceneNode* mainNode = nullptr;
+	Ogre::SceneNode* mNode = nullptr;
 public:
-	Ogre::SceneNode* getMainNode() { return mainNode; };
-	gameObject(Ogre::SceneNode* _parentNode);
+	Ogre::SceneNode* getMainNode() { return mNode; };
+	gameObject(Ogre::SceneNode* _node);
 	~gameObject();
 };
 
