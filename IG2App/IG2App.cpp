@@ -23,7 +23,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
     getRoot()->queueEndRendering();
   }
   
-  //else if (evt.keysym.sym == SDLK_???)
+  else if (evt.keysym.sym == SDLK_c ) {
+	  if (!sinbadFocus) {
+		mCamMgr->setTarget(mSinbad->getMainNode());
+		sinbadFocus = true;
+	  }
+	  else {
+		  mCamMgr->setTarget(mSM->getRootSceneNode());
+		  sinbadFocus = false;
+	  }
+  }
   
   return true;
 }
@@ -106,6 +115,7 @@ void IG2App::setupScene(void)
 
   addInputListener(mPlane);
 
+  //Crea la cámara para los reflejos
   Ogre::Camera* camRef = mSM->createCamera("RefCam");
 
   camRef->setNearClipDistance(1);
@@ -113,7 +123,7 @@ void IG2App::setupScene(void)
   camRef->setAutoAspectRatio(true);
 
   mCamNode->attachObject(camRef);
-
+  //Plano para el reflejo del agua
   MovablePlane* mp = new MovablePlane({ 0,1,0 }, 1);
   mPlane->getMainNode()->attachObject(mp);
   camRef->enableReflection(mp);
@@ -121,25 +131,10 @@ void IG2App::setupScene(void)
 
   mPlane->crearReflejo(camRef);
   
-  //------------------------------------------------------------------------
- // mToyNode = new Toy(mPlaneNode, mSM);
- 
-
-  //camRef->setNearClipDistance(1);
-  //camRef->setFarClipDistance(10000);
-  //camRef->setAutoAspectRatio(true);
-  //camRef->enableReflection(mPlaneNode);
-  //camRef->enableCustomNearClipPlane(mPlaneNode)
-	  //cam->setPolygonMode(Ogre::PM_WIREFRAME); 
-
-	/*  Ogre::SceneNode* mCamNode = nullptr;
-  mCamNode = _parentNode->getCreator()->getRootSceneNode()->createChildSceneNode("nCam");
-  mCamNode->attachObject(camRef);*/
-
- 
+   
   //------------------------------------------------------------------------
 
-  // finally something to render
+  // Crea a sinbad como hijo del plano
   mSinbad = new Sinbad(mPlane->getMainNode()->createChildSceneNode("nSinbad"), mSM);
 
   addInputListener(mSinbad);
@@ -148,10 +143,10 @@ void IG2App::setupScene(void)
   mToy->setPosition({ 0, 100, -300 });
 
   addInputListener(mToy);
-  
-  mBomb = new Bomb(mPlane->getMainNode()->createChildSceneNode("nBomb"), mSM);
-  mBomb->setPosition({ 100, 100, -300 });
-
+  //Crea la bomba y registra a Toy y Sinbad como listeners para recibir el mensaje de explosion
+  mBomb = new Bomb(mPlane->getMainNode()->createChildSceneNode("nBomb"), mSM, { 0, 0, 50 });
+  mBomb->addAppListener(mSinbad);
+  mBomb->addAppListener(mToy);
   addInputListener(mBomb);
 
   //------------------------------------------------------------------------
@@ -160,7 +155,29 @@ void IG2App::setupScene(void)
   addInputListener(mCamMgr);
   mCamMgr->setStyle(OgreBites::CS_ORBIT);  
   
-  
+/*
+  BillboardSet* bbSet = mSM->createBillboardSet("BBSet", 4);
+  FloatRect texCoordArray[4] = {
+	  FloatRect(0.0,0.0,0.5,0.5),
+	  FloatRect(0.5,0.0,1.0,0.5),
+	  FloatRect(0.0,0.5,0.5,1.0),
+	  FloatRect(0.5,0.5,1.0,1.0),
+  };
+  bbSet->setTextureCoords(texCoordArray, 4);
+  bbSet->setDefaultDimensions(200, 200);
+  bbSet->setMaterialName("Examples/Smoke");
+
+  mPlane->getMainNode()->attachObject(bbSet);
+
+  Billboard* bb = bbSet->createBillboard({ 0,0,0 });
+  bb->setTexcoordIndex(3);
+  bb = bbSet->createBillboard({ 0,-100,0 });
+  bb->setTexcoordIndex(1);
+  bb = bbSet->createBillboard({-100,0,0 });
+  bb->setTexcoordIndex(2);
+  bb = bbSet->createBillboard({ -100,-100,0 });
+  bb->setTexcoordIndex(0);
+*/
   //mCamMgr->setTarget(mSinbadNode);  
   //mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
 }

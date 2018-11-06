@@ -17,13 +17,20 @@ class Bomb: public gameObject
 {
 private:
 	Ogre::SceneNode* mBombNode = nullptr;
+	ParticleSystem* smoke = nullptr;
+	Entity* ent = nullptr;
+	bool exploded = false;
 public:
 	AnimationState * animationState;
 	void setPosition(Ogre::Vector3 position) {
-		//mBombNode->setPosition(position);
+		mBombNode->setPosition(position);
 	}
 	virtual void frameRendered(const Ogre::FrameEvent & evt);
-	Bomb(Ogre::SceneNode* _node, Ogre::SceneManager* _msm);
+	virtual void handleEvent(gameObjectEvent ev) {};
+	Bomb(Ogre::SceneNode* _node, Ogre::SceneManager* _msm, Vector3 position);
+	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
+	void explode();
+	bool comprobarColision();
 	~Bomb();
 };
 

@@ -18,5 +18,6 @@ public:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
 	virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
+	virtual void handleEvent(gameObjectEvent ev) {};
 };
 

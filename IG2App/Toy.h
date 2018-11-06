@@ -9,6 +9,7 @@
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
 #include "gameObject.h"
+#include <OgreAxisAlignedBox.h>
 class Toy : public gameObject
 {
 private:
@@ -33,6 +34,8 @@ public:
 	void setPosition(Ogre::Vector3 position) {
 		nodeCuello->setPosition(position);
 	}
+	virtual void handleEvent(gameObjectEvent ev);
+	void muere();
 	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt);
 	virtual void frameRendered(const Ogre::FrameEvent & evt);
 	Ogre::SceneNode* getMainNode() { return nodeCuello; };

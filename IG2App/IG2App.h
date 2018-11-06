@@ -10,6 +10,7 @@
 #include "Sinbad.h"
 #include "PlaneObject.h"
 #include "Bomb.h"
+#include "gameObject.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -18,6 +19,7 @@ public:
   virtual ~IG2App() { };   // delete -> shutdown()  
  
 protected:
+  bool sinbadFocus = false;
   virtual void setup();
   virtual void shutdown();
   virtual void setupScene();
@@ -28,7 +30,8 @@ protected:
   OgreBites::TrayManager* mTrayMgr = nullptr;    
   Ogre::SceneNode* mLightNode = nullptr;
   Ogre::SceneNode* mCamNode = nullptr;
-  Ogre::SceneNode* mSinbadNode = nullptr;
+  Ogre::SceneNode* mSmokeNode = nullptr;
+  Ogre::SceneNode* mBBNode = nullptr;
   //Ogre::SceneNode* mPlaneNode = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
   Toy* mToy = nullptr;
