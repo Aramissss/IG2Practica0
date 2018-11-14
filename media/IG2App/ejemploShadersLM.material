@@ -1,0 +1,34 @@
+material ejemploShadersLM{
+	technique {
+		pass{
+			vertex_program_ref vertexShaderLM
+			{
+				source vertexShaderLMglsl.txt
+				default_params{
+					param_named_auto modelViewProjMat worldviewproj_matrix
+				}
+			}
+			fragment_program_ref fragmentsShaderLM
+			{
+				source fragmentShaderLMglsl.txt
+				default_params
+				{
+					param_named texture1 int 0
+					param_named texture2 int 1
+					param_named FB float 0.5
+					param_named intLuz float 1.0;
+				}
+			}
+			texture_unit texture1{
+				texture 1d_debug.png 2d
+				tex_address_mode clamp
+				filtering bilinear
+			}
+			texture_unit texture2{
+				texture flare.png 2d 
+				tex_address_mode wrap
+			}
+		}
+	}
+}
+			
