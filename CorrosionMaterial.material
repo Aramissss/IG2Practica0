@@ -1,0 +1,38 @@
+vertex_program vertexShaderCorrosion glsl
+	{
+	source vertexShaderCorrosion.txt 
+	default_params 
+	{
+		param_named_auto model world_matrix
+		param_named_auto normalMat inverse_transpose_world_matrix
+	}
+}
+
+fragment_program fragmentShaderCorrosion glsl
+{
+	source fragmentShaderCorrosion.txt 
+	default_params 
+	{
+		param_named textura1 int 0 
+		param_named light_position 0
+		param_named light_diffuse_colour 0
+	}
+}
+
+material ShadersCorrosion {
+	technique {
+		pass {
+		vertex_program_ref vertexShaderCorrosion
+		{ 
+		}
+		fragment_program_ref fragmentShaderCorrosion
+		{ 
+		}
+		texture_unit textura1 { 
+			cull_hardware none
+			cull_software none
+			texture corrosion.jpg 2d
+			tex_address_mode wrap
+			filtering bilinear 
+		}
+	} } }
