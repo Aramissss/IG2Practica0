@@ -1,17 +1,15 @@
-#version 330 core // learnopengl.com
-layout (location = 0) in vec3 aPos; // organización
-layout (location = 1) in vec3 aNormal; // de los datos
-layout (location = 2) in vec2 aTexCoords; // en la malla
-out vec3 FragPos; // en world space
-out vec3 Normal; // en world space
-out vec2 TexCoords;
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
-
+#version 330 core
+in vec4 vertex; 
+in vec2 uv0;
+uniform mat4 modelViewProjMat; 
+uniform float tiempoA;
+out vec2 vUv0;
+out vec2 vUv1;
 void main() {
-	FragPos = vec3(model * vec4(aPos, 1.0));
-	Normal = mat3(transpose(inverse(model))) * aNormal;
-	TexCoords = aTexCoords;
-	gl_Position = projection * view * vec4(FragPos, 1.0);
+	
+	vUv0 = uv0;
+	vUv1 = uv0;
+	vUv1.s = vUv1.s*tiempoA;
+	vUv1.t = vUv1.t*tiempoA;
+	gl_Position = modelViewProjMat * vertex;
 }

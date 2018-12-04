@@ -149,6 +149,8 @@ void IG2App::setupScene(void)
   mBomb->addAppListener(mToy);
   addInputListener(mBomb);
 
+  mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20), "ejemploShadersLM", 1, 1, true, 0.0, 100, 100);
+  
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);
